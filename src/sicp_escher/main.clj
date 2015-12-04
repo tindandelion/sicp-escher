@@ -1,24 +1,25 @@
 (ns sicp-escher.main
   (:require [quil.core :as q])
-  (:require [sicp-escher.core :as core])
+  (:require [sicp-escher.core :refer :all])
+  (:require [sicp-escher.frame :as frame])
   (:gen-class))
 
 (defn segments->picture [segments]
   (fn [frame]
     (doseq [[start end] segments]
       (q/line
-        (core/map-to-frame frame start)
-        (core/map-to-frame frame end)))))
+        (frame/map-vector frame start)
+        (frame/map-vector frame end)))))
 
 (def cross (segments->picture
              [[[0 0] [1.0 1.0]]
               [[0 1.0] [1.0 0]]
               [[0 0.2] [0.2 0]]]))
 
-(def picture (core/flip-vert cross))
+(def picture (beside cross (flip-vert cross)))
 
 (defn window-frame []
-  (core/make-frame [0 0] [(q/width) 0] [0 (q/height)]))
+  (frame/make-frame [0 0] [(q/width) 0] [0 (q/height)]))
 
 (defn draw []
   (picture (window-frame)))
