@@ -15,6 +15,10 @@
 (deftest frame-operations
   (let [original {:origin [0 0] :e1 [10 0] :e2 [3 10]}]
     (is (= {:origin [0 10] :e1 [10 0] :e2 [3 -10]}
-           (frame/flip-vert original)))))
+           (frame/flip-vert original)))
+    (is (= {:origin [0 0] :e1 [20 0] :e2 [6 40]}
+           (frame/scale original [2 4])))
+    (is (= {:origin [3 5] :e1 [10 0] :e2 [3 10]}
+           (frame/move-by original [3 5])))))
 
 

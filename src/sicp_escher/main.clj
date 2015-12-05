@@ -16,7 +16,10 @@
               [[0 1.0] [1.0 0]]
               [[0 0.2] [0.2 0]]]))
 
-(def picture (beside cross (flip-vert cross)))
+(def picture
+  (flip-vert
+    (move-by (scale cross [0.5 1]) [10 0])))
+; (def picture (beside cross (flip-vert cross)))
 
 (defn window-frame []
   (frame/make-frame [0 0] [(q/width) 0] [0 (q/height)]))

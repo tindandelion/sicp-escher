@@ -4,8 +4,10 @@
 (defn flip-vert [picture]
   (fn [frame] (picture (frame/flip-vert frame))))
 
-(defn beside [left-picture right-picture]
+(defn scale [picture factor]
   (fn [frame]
-    (let [[left-frame right-frame] (frame/split-vert frame)]
-      (left-picture left-frame)
-      (right-picture right-frame))))
+    (picture (frame/scale frame factor))))
+
+(defn move-by [picture increment]
+  (fn [frame]
+    (picture (frame/move-by frame increment))))
