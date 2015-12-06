@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="ReplState" timestamp="1449308078904">{:repl-history {:ide [], :local [], :remote []}}</component>
+  <component name="ReplState" timestamp="1449392776561">{:repl-history {:ide [], :local [&quot;(def x [5 6 7])&quot; &quot;(1 x)&quot; &quot;(nth 1 x)&quot; &quot;(nth x 1)&quot; &quot;(def mp {:a 1 :b 2 :c 3})&quot; &quot;(update-in mp [:a] + 10)&quot; &quot;(update-in mp [:a :b] + 10)&quot; &quot;(def x [4 5 6])&quot; &quot;(x 1)&quot; &quot;x&quot; &quot;(update x 1 + 10)&quot;], :remote []}}</component>
 </project>

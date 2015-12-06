@@ -16,20 +16,23 @@
               [[0 1.0] [1.0 0]]
               [[0 0.2] [0.2 0]]]))
 
-(def picture
-  (flip-vert
-    (move-by (scale cross [0.5 1]) [10 0])))
-; (def picture (beside cross (flip-vert cross)))
+(def picture (square-limit cross 4))
 
 (defn window-frame []
-  (frame/make-frame [0 0] [(q/width) 0] [0 (q/height)]))
+  {:origin [0 0] :e1 [(q/width) 0] :e2 [0 (q/height)]})
 
 (defn draw []
   (picture (window-frame)))
 
+(defn setup []
+  (q/smooth)
+  (q/frame-rate 1)
+  (q/stroke-weight 2)
+  (q/background 200))
+
 (q/defsketch escher
              :title "Escher"
-             :setup #(q/background 255 255 255)
+             :setup setup
              :draw draw
              :size [512 512])
 
