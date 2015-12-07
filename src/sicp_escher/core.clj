@@ -1,11 +1,16 @@
 (ns sicp-escher.core
   (:require [sicp-escher.frame :as frame]))
 
+(defn id [picture] picture)
+
 (defn flip-vert [picture]
   (fn [frame] (picture (frame/flip-vert frame))))
 
 (defn flip-horz [picture]
   (fn [frame] (picture (frame/flip-horz frame))))
+
+(defn rotate180 [picture]
+  (flip-vert (flip-horz picture)))
 
 (defn beside [picture1 picture2]
   (fn [frame]
@@ -42,6 +47,14 @@
       (beside
         (below top-left picture)
         (below corner bottom-right)))))
+
+(defn square-of-four [tl tr bl br]
+  (fn [picture]
+    (let [top (beside (tl picture) (tr picture))
+          bottom (beside (bl picture) (br picture))]
+      (below top bottom))))
+
+(def flipped-pairs (square-of-four id flip-vert id flip-vert))
 
 (defn square-limit [picture n]
   (let [quarter (corner-split picture n)
