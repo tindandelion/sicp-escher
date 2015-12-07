@@ -16,11 +16,7 @@
               [[0 1.0] [1.0 0]]
               [[0 0.2] [0.2 0]]]))
 
-(def corner (corner-split cross 4))
-
-; (def tr (square-of-four id flip-horz flip-vert rotate180))
-
-(def picture corner)
+(def picture (square-limit cross 4))
 
 (defn window-frame []
   {:origin [0 0] :e1 [(q/width) 0] :e2 [0 (q/height)]})

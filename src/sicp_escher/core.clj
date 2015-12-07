@@ -48,15 +48,15 @@
         (below top-left picture)
         (below corner bottom-right)))))
 
-(defn square-of-four [tl tr bl br]
+(defn square-of-four [top-left top-right bottom-left bottom-right]
   (fn [picture]
-    (let [top (beside (tl picture) (tr picture))
-          bottom (beside (bl picture) (br picture))]
+    (let [top (beside (top-left picture) (top-right picture))
+          bottom (beside (bottom-left picture) (bottom-right picture))]
       (below top bottom))))
 
 (def flipped-pairs (square-of-four id flip-vert id flip-vert))
 
+(def quadrant (square-of-four flip-horz id rotate180 flip-vert))
+
 (defn square-limit [picture n]
-  (let [quarter (corner-split picture n)
-        half (beside (flip-horz quarter) quarter)]
-    (below half (flip-vert half))))
+  (quadrant (corner-split picture n)))
