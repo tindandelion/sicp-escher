@@ -9,7 +9,7 @@
 (defn flip-horz [picture]
   (fn [frame] (picture (frame/flip-horz frame))))
 
-(defn rotate180 [picture]
+(defn rotate-180 [picture]
   (flip-vert (flip-horz picture)))
 
 (defn beside [left-pic right-pic]
@@ -24,17 +24,22 @@
       (upper-pic upper)
       (lower-pic lower))))
 
-(defn right-split [picture n]
-  (if (= n 0)
-    picture
-    (let [smaller (right-split picture (dec n))]
-      (beside picture (below smaller smaller)))))
+(defn split [first-transform second-transform]
+  (letfn [(splitter [picture n]
+            (if (= n 0)
+              picture
+              (let [smaller (splitter picture (dec n))]
+                (first-transform picture (second-transform smaller smaller)))))]
+    splitter))
 
-(defn up-split [picture n]
-  (if (= n 0)
-    picture
-    (let [smaller (up-split picture (dec n))]
-      (below picture (beside smaller smaller)))))
+(defn square-of-four [tl-transform tr-transform bl-transform br-transform]
+  (fn [picture]
+    (let [top (beside (tl-transform picture) (tr-transform picture))
+          bottom (beside (bl-transform picture) (br-transform picture))]
+      (below bottom top))))
+
+(def right-split (split beside below))
+(def up-split (split below beside))
 
 (defn corner-split [picture n]
   (if (= n 0)
@@ -48,15 +53,6 @@
         (below picture top-left)
         (below bottom-right corner)))))
 
-(defn square-of-four [top-left top-right bottom-left bottom-right]
-  (fn [picture]
-    (let [top (beside (top-left picture) (top-right picture))
-          bottom (beside (bottom-left picture) (bottom-right picture))]
-      (below bottom top))))
-
-(def flipped-pairs (square-of-four id flip-vert id flip-vert))
-
-(def quadrant (square-of-four flip-horz id rotate180 flip-vert))
-
 (defn square-limit [picture n]
-  (quadrant (corner-split picture n)))
+  (let [quadrant (square-of-four flip-horz id rotate-180 flip-vert)]
+    (quadrant (corner-split picture n))))
