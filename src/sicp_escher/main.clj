@@ -16,7 +16,8 @@
               [[0 1.0] [1.0 0]]
               [[0 0.2] [0.2 0]]]))
 
-(def picture (square-limit cross 4))
+;(def picture (square-limit cross 4))
+(def picture (beside cross (rotate-180 cross)))
 
 (defn window-frame []
   {:origin [0 0] :e1 [(q/width) 0] :e2 [0 (q/height)]})

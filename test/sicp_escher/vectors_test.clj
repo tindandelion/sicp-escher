@@ -14,13 +14,18 @@
 
 (deftest frame-operations
   (let [original {:origin [0 0] :e1 [10 0] :e2 [3 10]}]
-    (is (= {:origin [0 10] :e1 [10 0] :e2 [3 -10]}
-           (frame/flip-vert original)))
     (is (= {:origin [0 0] :e1 [20 0] :e2 [6 40]}
            (frame/scale original [2 4])))
     (is (= [{:origin [0 0] :e1 [5.0 0] :e2 [1.5 10]}
             {:origin [5.0 0] :e1 [5.0 0] :e2 [1.5 10]}]
-           (frame/split-horz original)))
-    ))
+           (frame/split-horz original)))))
+
+
+(deftest transform-vectors
+  (let [frame {:origin [0.0 0.0] :e1 [100.0 0.0] :e2 [0.0 100.0]}]
+    (is (= {:origin [0.0 100.0] :e1 [100.0 0.0] :e2 [0.0 -100.0]}
+           (frame/flip-vert frame)))
+    (is (= {:origin [100.0 0.0] :e1 [0.0 100.0] :e2 [-100.0 0.0]}
+           (frame/rotate-90 frame)))))
 
 

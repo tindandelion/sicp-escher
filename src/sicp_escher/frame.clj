@@ -6,12 +6,25 @@
 (defn- scale-vect [[x y] [factor-x factor-y]]
   [(* factor-x x) (* factor-y y)])
 
+(defn- sub-vect [[x1 y1] [x2 y2]]
+  [(- x1 x2) (- y1 y2)])
+
 (defn map-vector [{origin :origin e1 :e1 e2 :e2} [x y]]
   (add-vect
     origin
     (add-vect
       (scale-vect e1 [x x])
       (scale-vect e2 [y y]))))
+
+(defn transform-frame [origin corner-left corner-btm]
+  (fn [frame]
+    (let [new-origin (map-vector frame origin)]
+      {:origin new-origin
+       :e1     (sub-vect (map-vector frame corner-left) new-origin)
+       :e2     (sub-vect (map-vector frame corner-btm) new-origin)})))
+
+(def flip-vert (transform-frame [0.0 1.0] [1.0 1.0] [0.0 0.0]))
+(def rotate-90 (transform-frame [1.0 0.0] [1.0 1.0] [0.0 0.0]))
 
 (defn scale [frame factor]
   (-> frame
@@ -23,16 +36,6 @@
 
 (defn- shift-by-y [frame increment]
   (update frame :origin add-vect [0 increment]))
-
-(defn flip-vert [frame]
-  (-> frame
-      (shift-by-y ((:e2 frame) 1))
-      (update :e2 scale-vect [1 -1])))
-
-(defn flip-horz [frame]
-  (-> frame
-      (shift-by-x ((:e1 frame) 0))
-      (update :e1 scale-vect [-1 1])))
 
 
 (defn split-horz [frame]

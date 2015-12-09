@@ -6,11 +6,11 @@
 (defn flip-vert [picture]
   (fn [frame] (picture (frame/flip-vert frame))))
 
-(defn flip-horz [picture]
-  (fn [frame] (picture (frame/flip-horz frame))))
+(defn rotate-90 [picture]
+  (fn [frame] (picture (frame/rotate-90 frame))))
 
 (defn rotate-180 [picture]
-  (flip-vert (flip-horz picture)))
+  (rotate-90 (rotate-90 picture)))
 
 (defn beside [left-pic right-pic]
   (fn [frame]
@@ -54,5 +54,5 @@
         (below bottom-right corner)))))
 
 (defn square-limit [picture n]
-  (let [quadrant (square-of-four flip-horz id rotate-180 flip-vert)]
+  (let [quadrant (square-of-four rotate-90 id rotate-180 flip-vert)]
     (quadrant (corner-split picture n))))
