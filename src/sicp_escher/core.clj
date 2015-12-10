@@ -4,10 +4,12 @@
 (defn id [picture] picture)
 
 (defn flip-vert [picture]
-  (fn [frame] (picture (frame/flip-vert frame))))
+  (let [transform (frame/make-transform [0.0 1.0] [1.0 1.0] [0.0 0.0])]
+    (fn [frame] (picture (transform frame)))))
 
 (defn rotate-90 [picture]
-  (fn [frame] (picture (frame/rotate-90 frame))))
+  (let [transform (frame/make-transform [1.0 0.0] [1.0 1.0] [0.0 0.0])]
+    (fn [frame] (picture (transform frame)))))
 
 (defn rotate-180 [picture]
   (rotate-90 (rotate-90 picture)))

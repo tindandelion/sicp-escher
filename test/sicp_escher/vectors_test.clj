@@ -1,6 +1,7 @@
 (ns sicp-escher.vectors-test
   (:require [clojure.test :refer :all]
-            [sicp-escher.frame :as frame]))
+            [sicp-escher.frame :as frame]
+            [sicp-escher.core :as core]))
 
 (deftest mapping-vector-to-frame
   (let [frame {:origin [1 1] :e1 [1 0] :e2 [0 1]}]
@@ -20,12 +21,16 @@
             {:origin [5.0 0] :e1 [5.0 0] :e2 [1.5 10]}]
            (frame/split-horz original)))))
 
-
-(deftest transform-vectors
-  (let [frame {:origin [0.0 0.0] :e1 [100.0 0.0] :e2 [0.0 100.0]}]
+(deftest single-picture-transformations
+  (let [frame {:origin [0.0 0.0] :e1 [100.0 0.0] :e2 [0.0 100.0]}
+        test-picture (fn [fr] fr)
+        apply-transform (fn [transform] ((transform test-picture) frame))]
+    (is (= frame (apply-transform core/id)) "No transformation")
     (is (= {:origin [0.0 100.0] :e1 [100.0 0.0] :e2 [0.0 -100.0]}
-           (frame/flip-vert frame)))
+           (apply-transform core/flip-vert)) "Flip picture vertically")
     (is (= {:origin [100.0 0.0] :e1 [0.0 100.0] :e2 [-100.0 0.0]}
-           (frame/rotate-90 frame)))))
+           (apply-transform core/rotate-90)) "Rotate picture by 90 degree clockwise")
+    (is (= {:origin [100.0 100.0] :e1 [-100.0 0.0] :e2 [0.0 -100.0]}
+           (apply-transform core/rotate-180))) "Rotate picture by 180 degree clockwise"))
 
 
