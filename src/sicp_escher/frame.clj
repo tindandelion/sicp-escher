@@ -23,29 +23,5 @@
        :e1     (sub-vect (map-vector frame corner-left) new-origin)
        :e2     (sub-vect (map-vector frame corner-btm) new-origin)})))
 
-(defn scale [frame factor]
-  (-> frame
-      (update :e1 scale-vect factor)
-      (update :e2 scale-vect factor)))
-
-(defn- shift-by-x [frame increment]
-  (update frame :origin add-vect [increment 0]))
-
-(defn- shift-by-y [frame increment]
-  (update frame :origin add-vect [0 increment]))
-
-
-(defn split-horz [frame]
-  (let [scaled (scale frame [0.5 1])
-        shift-x ((:e1 scaled) 0)]
-    [scaled (shift-by-x scaled shift-x)]))
-
-(defn split-vert [frame]
-  (let [scaled (scale frame [1 0.5])
-        shift-y ((:e2 scaled) 1)]
-    [scaled (shift-by-y scaled shift-y)]))
-
-
-
 
 

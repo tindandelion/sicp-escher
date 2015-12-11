@@ -15,16 +15,18 @@
   (rotate-90 (rotate-90 picture)))
 
 (defn beside [left-pic right-pic]
-  (fn [frame]
-    (let [[left right] (frame/split-horz frame)]
-      (left-pic left)
-      (right-pic right))))
+  (let [left-transform (frame/make-transform [0.0 0.0] [0.5 0.0] [0.0 1.0])
+        right-transform (frame/make-transform [0.5 0.0] [1.0 0.0] [0.5 1.0])]
+    (fn [frame]
+      [(left-pic (left-transform frame))
+       (right-pic (right-transform frame))])))
 
 (defn below [lower-pic upper-pic]
-  (fn [frame]
-    (let [[upper lower] (frame/split-vert frame)]
-      (upper-pic upper)
-      (lower-pic lower))))
+  (let [upper-transform (frame/make-transform [0.0 0.0] [1.0 0.0] [0.0 0.5])
+        lower-transform (frame/make-transform [0.0 0.5] [1.0 0.5] [0.0 1.0])]
+    (fn [frame]
+      [(upper-pic (upper-transform frame))
+       (lower-pic (lower-transform frame))])))
 
 (defn split [first-transform second-transform]
   (letfn [(splitter [picture n]
@@ -34,14 +36,14 @@
                 (first-transform picture (second-transform smaller smaller)))))]
     splitter))
 
+(def right-split (split beside below))
+(def up-split (split below beside))
+
 (defn square-of-four [tl-transform tr-transform bl-transform br-transform]
   (fn [picture]
     (let [top (beside (tl-transform picture) (tr-transform picture))
           bottom (beside (bl-transform picture) (br-transform picture))]
       (below bottom top))))
-
-(def right-split (split beside below))
-(def up-split (split below beside))
 
 (defn corner-split [picture n]
   (if (= n 0)

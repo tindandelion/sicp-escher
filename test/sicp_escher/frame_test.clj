@@ -12,10 +12,8 @@
   (let [frame {:origin [0 0] :e1 [512 0] :e2 [0 512]}]
     (is (= [512.0 512.0] (frame/map-vector frame [1.0 1.0])))))
 
-(deftest frame-operations
-  (let [original {:origin [0 0] :e1 [10 0] :e2 [3 10]}]
-    (is (= {:origin [0 0] :e1 [20 0] :e2 [6 40]}
-           (frame/scale original [2 4])))
-    (is (= [{:origin [0 0] :e1 [5.0 0] :e2 [1.5 10]}
-            {:origin [5.0 0] :e1 [5.0 0] :e2 [1.5 10]}]
-           (frame/split-horz original)))))
+(deftest create-frame-transformations
+  (let [frame {:origin [0.0 0.0] :e1 [100.0 0.0] :e2 [0.0 100.0]}
+        transform (frame/make-transform [0.5 0.5] [1.0 0.5] [0.5 1.0])]
+    (is (= {:origin [50.0 50.0] :e1 [50.0 0.0] :e2 [0.0 50.0]}
+           (transform frame)))))
