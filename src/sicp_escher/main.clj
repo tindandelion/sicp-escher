@@ -28,7 +28,7 @@
 (defn setup []
   (q/smooth)
   (q/frame-rate 1)
-  (q/stroke-weight 2)
+  (q/stroke-weight 1)
   (q/background 200))
 
 (q/defsketch escher
