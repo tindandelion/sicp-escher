@@ -7,12 +7,12 @@
   (let [transform (frame/make-transform [0.0 1.0] [1.0 1.0] [0.0 0.0])]
     (fn [frame] (picture (transform frame)))))
 
-(defn rotate-90 [picture]
-  (let [transform (frame/make-transform [1.0 0.0] [1.0 1.0] [0.0 0.0])]
+(defn flip-horz [picture]
+  (let [transform (frame/make-transform [1.0 0.0] [0.0 0.0] [1.0 1.0])]
     (fn [frame] (picture (transform frame)))))
 
 (defn rotate-180 [picture]
-  (rotate-90 (rotate-90 picture)))
+  (flip-horz (flip-vert picture)))
 
 (defn beside [left-pic right-pic]
   (let [left-transform (frame/make-transform [0.0 0.0] [0.5 0.0] [0.0 1.0])
@@ -58,5 +58,5 @@
         (below bottom-right corner)))))
 
 (defn square-limit [picture n]
-  (let [quadrant (square-of-four rotate-90 id rotate-180 flip-vert)]
+  (let [quadrant (square-of-four flip-horz id rotate-180 flip-vert)]
     (quadrant (corner-split picture n))))

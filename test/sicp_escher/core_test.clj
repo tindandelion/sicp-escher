@@ -11,9 +11,9 @@
 
       (is (= frame (apply-transform core/id)) "No transformation")
       (is (= {:origin [0.0 100.0] :e1 [100.0 0.0] :e2 [0.0 -100.0]}
-             (apply-transform core/flip-vert)) "Flip picture vertically")
-      (is (= {:origin [100.0 0.0] :e1 [0.0 100.0] :e2 [-100.0 0.0]}
-             (apply-transform core/rotate-90)) "Rotate picture by 90 degree clockwise")
+             (apply-transform core/flip-vert)) "Flip picture over the vertical axis")
+      (is (= {:origin [100.0 0.0] :e1 [-100.0 0.0] :e2 [0.0 100.0]}
+             (apply-transform core/flip-horz)) "Flip picture over the horizontal axis")
       (is (= {:origin [100.0 100.0] :e1 [-100.0 0.0] :e2 [0.0 -100.0]}
              (apply-transform core/rotate-180)) "Rotate picture by 180 degree clockwise")))
 
