@@ -3,6 +3,10 @@
 
 (defn id [picture] picture)
 
+(defn scale [factor picture]
+  (let [transform (frame/make-transform [0.0 0.0] [factor 0.0] [0.0 factor])]
+    (fn [frame] (picture (transform frame)))))
+
 (defn flip-vert [picture]
   (let [transform (frame/make-transform [0.0 1.0] [1.0 1.0] [0.0 0.0])]
     (fn [frame] (picture (transform frame)))))
