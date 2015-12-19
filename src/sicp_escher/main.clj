@@ -1,28 +1,33 @@
 (ns sicp-escher.main
-  (:require [quil.core :as q])
+  (:require [quil.core :as quil])
   (:require [sicp-escher.core :refer :all])
   (:require [sicp-escher.data :as data])
   (:gen-class))
 
-(def picture (data/grid->picture data/p q/line))
+
+(def picture (flip-vert (quartet
+                          (data/p quil/line)
+                          (data/q quil/line)
+                          (data/r quil/line)
+                          (data/s quil/line))))
 ; (def picture (beside cross (rotate-180 cross)))
 
 (defn window-frame []
-  {:origin [0 0] :e1 [(q/width) 0] :e2 [0 (q/height)]})
+  {:origin [0 0] :e1 [(quil/width) 0] :e2 [0 (quil/height)]})
 
 (defn draw []
   (picture (window-frame)))
 
 (defn setup []
-  (q/smooth)
-  (q/frame-rate 1)
-  (q/stroke-weight 1)
-  (q/background 200))
+  (quil/smooth)
+  (quil/frame-rate 1)
+  (quil/stroke-weight 1)
+  (quil/background 200))
 
-(q/defsketch escher
-             :title "Escher"
-             :setup setup
-             :draw draw
-             :size [512 512])
+(quil/defsketch escher
+                :title "Escher"
+                :setup setup
+                :draw draw
+                :size [512 512])
 
 

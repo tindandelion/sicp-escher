@@ -32,6 +32,11 @@
       [(upper-pic (upper-transform frame))
        (lower-pic (lower-transform frame))])))
 
+(defn quartet [top-left top-right bottom-left bottom-right]
+  (let [top (beside top-left top-right)
+        bottom (beside bottom-left bottom-right)]
+    (below bottom top)))
+
 (defn split [first-transform second-transform]
   (letfn [(splitter [picture n]
             (if (= n 0)
@@ -48,6 +53,7 @@
     (let [top (beside (tl-transform picture) (tr-transform picture))
           bottom (beside (bl-transform picture) (br-transform picture))]
       (below bottom top))))
+
 
 (defn corner-split [picture n]
   (if (= n 0)
