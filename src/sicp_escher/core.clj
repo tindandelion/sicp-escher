@@ -3,22 +3,19 @@
 
 (defn id [picture] picture)
 
+(defn- transformer-fn [new-origin new-corner-1 new-corner-2]
+  (let [transform (frame/make-transform new-origin new-corner-1 new-corner-2)]
+    (fn [picture]
+      (fn [frame]
+        (picture (transform frame))))))
+
+(def flip-vert (transformer-fn [0.0 1.0] [1.0 1.0] [0.0 0.0]))
+(def flip-horz (transformer-fn [1.0 0.0] [0.0 0.0] [1.0 1.0]))
+(def rotate-ccw-90 (transformer-fn [0.0 1.0] [0.0 0.0] [1.0 1.0]))
+
 (defn scale [factor picture]
-  (let [transform (frame/make-transform [0.0 0.0] [factor 0.0] [0.0 factor])]
-    (fn [frame] (picture (transform frame)))))
-
-(defn flip-vert [picture]
-  (let [transform (frame/make-transform [0.0 1.0] [1.0 1.0] [0.0 0.0])]
-    (fn [frame] (picture (transform frame)))))
-
-(defn flip-horz [picture]
-  (let [transform (frame/make-transform [1.0 0.0] [0.0 0.0] [1.0 1.0])]
-    (fn [frame] (picture (transform frame)))))
-
-(defn rotate-ccw-90 [picture]
-  (let [transform (frame/make-transform [0.0 1.0] [0.0 0.0] [1.0 1.0])]
-    (fn [frame] (picture (transform frame)))))
-
+  (let [transformer (transformer-fn [0.0 0.0] [factor 0.0] [0.0 factor])]
+    (transformer picture)))
 
 (defn rotate-180 [picture]
   (flip-horz (flip-vert picture)))
