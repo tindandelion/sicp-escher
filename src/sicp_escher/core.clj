@@ -15,6 +15,11 @@
   (let [transform (frame/make-transform [1.0 0.0] [0.0 0.0] [1.0 1.0])]
     (fn [frame] (picture (transform frame)))))
 
+(defn rotate-ccw-90 [picture]
+  (let [transform (frame/make-transform [0.0 1.0] [0.0 0.0] [1.0 1.0])]
+    (fn [frame] (picture (transform frame)))))
+
+
 (defn rotate-180 [picture]
   (flip-horz (flip-vert picture)))
 

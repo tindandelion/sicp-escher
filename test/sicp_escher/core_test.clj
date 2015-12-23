@@ -28,6 +28,9 @@
       (is (= {:origin [0.0 0.0] :e1 [50.0 0.0] :e2 [0.0 50.0]} (scaled frame))
           "Scale a picture proportionally by a given factor"))
 
+    (let [rotated (core/rotate-ccw-90 test-pic)]
+      (is (= {:origin [0.0 100.0] :e1 [0.0 -100.0] :e2 [100.0 0.0]} (rotated frame))
+          "Rotate a picture counter-clockwise by 90 degrees"))
     ))
 
 (deftest combining-picture-transformations

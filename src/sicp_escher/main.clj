@@ -4,12 +4,18 @@
   (:require [sicp-escher.data :as data])
   (:gen-class))
 
+(defn blank [_])
 
-(def picture (flip-vert (quartet
-                          (data/p quil/line)
-                          (data/q quil/line)
-                          (data/r quil/line)
-                          (data/s quil/line))))
+(def t (flip-vert (quartet
+                    (data/p quil/line)
+                    (data/q quil/line)
+                    (data/r quil/line)
+                    (data/s quil/line))))
+
+
+(def side1 (quartet blank blank (rotate-ccw-90 t) t))
+(def picture side1)
+
 ; (def picture (beside cross (rotate-180 cross)))
 
 (defn window-frame []
@@ -19,7 +25,7 @@
   (picture (window-frame)))
 
 (defn setup []
-  (quil/smooth)
+  (quil/no-smooth)
   (quil/frame-rate 1)
   (quil/stroke-weight 1)
   (quil/background 200))
