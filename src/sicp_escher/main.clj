@@ -6,15 +6,19 @@
 
 (defn blank [_])
 
-(def t (flip-vert (quartet
-                    (data/p quil/line)
-                    (data/q quil/line)
-                    (data/r quil/line)
-                    (data/s quil/line))))
+(def q (data/q quil/line))
+(def p (data/p quil/line))
+(def r (data/r quil/line))
+(def s (data/s quil/line))
+(def t (flip-vert (quartet p q r s)))
+(def u (cycled-quartet (flip-horz (rotate-ccw-90 s))))
 
 
 (def side1 (quartet blank blank (rotate-ccw-90 t) t))
-(def picture side1)
+(def side2 (quartet side1 side1 (rotate-ccw-90 t) t))
+(def corner1 (quartet blank blank blank u))
+(def corner2 (quartet corner1 blank blank u))
+(def picture corner2)
 
 ; (def picture (beside cross (rotate-180 cross)))
 

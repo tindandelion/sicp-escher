@@ -56,6 +56,15 @@
            (combination frame))
         "Placing pictures in four quadrants"))
 
+
+  (let [combination (core/cycled-quartet test-pic)]
+    (is (= [[{:origin [0.0 0.0] :e1 [50.0 0.0] :e2 [0.0 50.0]}
+             {:origin [100.0 0.0] :e1 [0.0 50.0] :e2 [-50.0 0.0]}]
+            [{:origin [0.0 100.0] :e1 [0.0 -50.0] :e2 [50.0 0.0]}
+             {:origin [100.0 100.0] :e1 [-50.0 0.0] :e2 [0.0 -50.0]}]]
+           (combination frame))
+        "Placing same in four quadrants rotating it by 90 degrees"))
+
   (let [combination (core/right-split test-pic 1)]
     (is (= [{:origin [0.0 0.0] :e1 [50.0 0.0] :e2 [0.0 100.0]}
             [{:origin [50.0 0.0] :e1 [50.0 0.0] :e2 [0.0 50.0]}

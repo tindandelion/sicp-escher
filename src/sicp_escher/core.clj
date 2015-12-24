@@ -39,6 +39,13 @@
         bottom (beside bottom-left bottom-right)]
     (below bottom top)))
 
+(defn cycled-quartet [picture]
+  (let [btm-left (rotate-ccw-90 picture)
+        btm-right (rotate-ccw-90 btm-left)
+        top-right (rotate-ccw-90 btm-right)]
+    (quartet picture top-right btm-left btm-right)))
+
+
 (defn split [first-transform second-transform]
   (letfn [(splitter [picture n]
             (if (= n 0)
@@ -49,6 +56,7 @@
 
 (def right-split (split beside below))
 (def up-split (split below beside))
+
 
 (defn square-of-four [tl-transform tr-transform bl-transform br-transform]
   (fn [picture]
@@ -72,3 +80,4 @@
 (defn square-limit [picture n]
   (let [quadrant (square-of-four flip-horz id rotate-180 flip-vert)]
     (quadrant (corner-split picture n))))
+
