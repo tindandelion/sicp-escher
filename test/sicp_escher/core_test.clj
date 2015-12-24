@@ -20,15 +20,11 @@
            (apply-transform core/flip-horz))
         "Flip picture over the horizontal axis")
 
-    (is (= {:origin [100.0 100.0] :e1 [-100.0 0.0] :e2 [0.0 -100.0]}
-           (apply-transform core/rotate-180))
-        "Rotate picture by 180 degree clockwise")
-
     (let [scaled (core/scale 0.5 test-pic)]
       (is (= {:origin [0.0 0.0] :e1 [50.0 0.0] :e2 [0.0 50.0]} (scaled frame))
           "Scale a picture proportionally by a given factor"))
 
-    (let [rotated (core/rotate-ccw-90 test-pic)]
+    (let [rotated (core/rotate test-pic)]
       (is (= {:origin [0.0 100.0] :e1 [0.0 -100.0] :e2 [100.0 0.0]} (rotated frame))
           "Rotate a picture counter-clockwise by 90 degrees"))
     ))
@@ -64,11 +60,5 @@
              {:origin [100.0 100.0] :e1 [-50.0 0.0] :e2 [0.0 -50.0]}]]
            (combination frame))
         "Placing same in four quadrants rotating it by 90 degrees"))
-
-  (let [combination (core/right-split test-pic 1)]
-    (is (= [{:origin [0.0 0.0] :e1 [50.0 0.0] :e2 [0.0 100.0]}
-            [{:origin [50.0 0.0] :e1 [50.0 0.0] :e2 [0.0 50.0]}
-             {:origin [50.0 50.0] :e1 [50.0 0.0] :e2 [0.0 50.0]}]]
-           (combination frame))
-        "Right-plitting picture once")))
+  )
 

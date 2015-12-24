@@ -11,16 +11,16 @@
 (def r (data/r quil/line))
 (def s (data/s quil/line))
 (def t (flip-vert (quartet p q r s)))
-(def u (cycled-quartet (flip-horz (rotate-ccw-90 s))))
+(def u (cycled-quartet (flip-horz (rotate s))))
 
 
-(def side1 (quartet blank blank (rotate-ccw-90 t) t))
-(def side2 (quartet side1 side1 (rotate-ccw-90 t) t))
+(def side1 (quartet blank blank (rotate t) t))
+(def side2 (quartet side1 side1 (rotate t) t))
 (def corner1 (quartet blank blank blank u))
-(def corner2 (quartet corner1 blank blank u))
-(def picture corner2)
-
-; (def picture (beside cross (rotate-180 cross)))
+(def corner2 (quartet corner1 side1 (rotate side1) u))
+(def pseudocorner (quartet corner2 side2 (rotate side2) (rotate t)))
+(def fishes (cycled-quartet pseudocorner))
+(def picture fishes)
 
 (defn window-frame []
   {:origin [0 0] :e1 [(quil/width) 0] :e2 [0 (quil/height)]})
@@ -38,6 +38,6 @@
                 :title "Escher"
                 :setup setup
                 :draw draw
-                :size [512 512])
+                :size [600 600])
 
 
