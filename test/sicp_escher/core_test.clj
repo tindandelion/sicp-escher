@@ -21,9 +21,9 @@
            (flipped canvas))
         "Flip picture over the horizontal axis"))
 
-  (let [scaled (core/scale 0.5 test-pic)]
-    (is (= {:origin [0.0 0.0] :e1 [50.0 0.0] :e2 [0.0 50.0]} (scaled canvas))
-        "Scale a picture proportionally by a given factor"))
+  (let [scaled (core/scale test-pic 0.5 0.3)]
+    (is (= {:origin [0.0 0.0] :e1 [50.0 0.0] :e2 [0.0 30.0]} (scaled canvas))
+        "Scale a picture by given factors"))
 
   (let [rotated (core/rotate test-pic)]
     (is (= {:origin [0.0 100.0] :e1 [0.0 -100.0] :e2 [100.0 0.0]} (rotated canvas))

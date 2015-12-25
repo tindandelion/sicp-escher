@@ -12,9 +12,8 @@
 
 (defn- grid [dimen segments]
   (fn [draw-line-fn]
-    (core/scale
-      (/ 1 dimen)
-      (seg->picture segments draw-line-fn))))
+    (let [factor (/ 1 dimen)]
+      (core/scale (seg->picture segments draw-line-fn) factor factor))))
 
 (def r
   (grid 16

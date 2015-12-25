@@ -20,8 +20,8 @@
 (def flip-horz (transformer-fn-canvas [1.0 0.0] [0.0 0.0] [1.0 1.0]))
 (def rotate (transformer-fn-canvas [0.0 1.0] [0.0 0.0] [1.0 1.0]))
 
-(defn scale [factor picture]
-  (let [transformer (transformer-fn-canvas [0.0 0.0] [factor 0.0] [0.0 factor])]
+(defn scale [picture factor-x factor-y]
+  (let [transformer (transformer-fn-canvas [0.0 0.0] [factor-x 0.0] [0.0 factor-y])]
     (transformer picture)))
 
 (defn beside [left-pic right-pic]
