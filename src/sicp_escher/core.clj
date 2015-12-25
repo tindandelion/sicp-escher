@@ -1,32 +1,39 @@
 (ns sicp-escher.core
   (:require [sicp-escher.frame :as frame]))
 
+(defrecord Canvas [frame])
+
 (defn id [picture] picture)
 
-(defn- transformer-fn [new-origin new-corner-1 new-corner-2]
-  (let [transform (frame/make-transform new-origin new-corner-1 new-corner-2)]
-    (fn [picture]
-      (fn [frame]
-        (picture (transform frame))))))
+(defn- make-transform [new-origin new-corner-1 new-corner-2]
+  (let [frame-transform (frame/make-transform new-origin new-corner-1 new-corner-2)]
+    (fn [canvas]
+      (->Canvas (frame-transform (:frame canvas))))))
 
-(def flip-vert (transformer-fn [0.0 1.0] [1.0 1.0] [0.0 0.0]))
-(def flip-horz (transformer-fn [1.0 0.0] [0.0 0.0] [1.0 1.0]))
-(def rotate (transformer-fn [0.0 1.0] [0.0 0.0] [1.0 1.0]))
+(defn- transformer-fn-canvas [new-origin new-corner-1 new-corner-2]
+  (let [transform (make-transform new-origin new-corner-1 new-corner-2)]
+    (fn [picture]
+      (fn [canvas] (picture (transform canvas))))))
+
+
+(def flip-vert (transformer-fn-canvas [0.0 1.0] [1.0 1.0] [0.0 0.0]))
+(def flip-horz (transformer-fn-canvas [1.0 0.0] [0.0 0.0] [1.0 1.0]))
+(def rotate (transformer-fn-canvas [0.0 1.0] [0.0 0.0] [1.0 1.0]))
 
 (defn scale [factor picture]
-  (let [transformer (transformer-fn [0.0 0.0] [factor 0.0] [0.0 factor])]
+  (let [transformer (transformer-fn-canvas [0.0 0.0] [factor 0.0] [0.0 factor])]
     (transformer picture)))
 
 (defn beside [left-pic right-pic]
-  (let [left-transform (frame/make-transform [0.0 0.0] [0.5 0.0] [0.0 1.0])
-        right-transform (frame/make-transform [0.5 0.0] [1.0 0.0] [0.5 1.0])]
-    (fn [frame]
-      [(left-pic (left-transform frame))
-       (right-pic (right-transform frame))])))
+  (let [left-transform (make-transform [0.0 0.0] [0.5 0.0] [0.0 1.0])
+        right-transform (make-transform [0.5 0.0] [1.0 0.0] [0.5 1.0])]
+    (fn [canvas]
+      [(left-pic (left-transform canvas))
+       (right-pic (right-transform canvas))])))
 
 (defn below [lower-pic upper-pic]
-  (let [upper-transform (frame/make-transform [0.0 0.0] [1.0 0.0] [0.0 0.5])
-        lower-transform (frame/make-transform [0.0 0.5] [1.0 0.5] [0.0 1.0])]
+  (let [upper-transform (make-transform [0.0 0.0] [1.0 0.0] [0.0 0.5])
+        lower-transform (make-transform [0.0 0.5] [1.0 0.5] [0.0 1.0])]
     (fn [frame]
       [(upper-pic (upper-transform frame))
        (lower-pic (lower-transform frame))])))

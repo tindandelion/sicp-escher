@@ -3,11 +3,12 @@
             [sicp-escher.core :as core]))
 
 (defn- seg->picture [segments draw-line-fn]
-  (fn [frame]
-    (doseq [[start end] segments]
-      (draw-line-fn
-        (frame/map-vector frame start)
-        (frame/map-vector frame end)))))
+  (fn [canvas]
+    (let [frame (:frame canvas)]
+      (doseq [[start end] segments]
+        (draw-line-fn
+          (frame/map-vector frame start)
+          (frame/map-vector frame end))))))
 
 (defn- grid [dimen segments]
   (fn [draw-line-fn]

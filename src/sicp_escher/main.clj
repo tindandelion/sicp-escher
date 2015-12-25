@@ -22,11 +22,13 @@
 (def fishes (cycled-quartet pseudocorner))
 (def picture fishes)
 
-(defn window-frame []
-  {:origin [0 0] :e1 [(quil/width) 0] :e2 [0 (quil/height)]})
+(defn window-canvas []
+  (->Canvas {:origin [0 0]
+             :e1 [(quil/width) 0]
+             :e2 [0 (quil/height)]}))
 
 (defn draw []
-  (picture (window-frame)))
+  (picture (window-canvas)))
 
 (defn setup []
   (quil/no-smooth)
