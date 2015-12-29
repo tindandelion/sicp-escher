@@ -1,15 +1,25 @@
 (ns sicp-escher.main
   (:require [quil.core :as quil])
   (:require [sicp-escher.core :refer :all])
-  (:require [sicp-escher.data :as data])
+  (:require [sicp-escher.data :as data]
+            [sicp-escher.frame :as frame])
+  (:import (sicp_escher.core Canvas))
   (:gen-class))
+
+(extend-type Canvas
+  data/Painter
+  (line [this start end]
+    (let [frame (:frame this)]
+      (quil/line
+        (frame/map-vector frame start)
+        (frame/map-vector frame end)))))
 
 (defn blank [_])
 
-(def q (data/q quil/line))
-(def p (data/p quil/line))
-(def r (data/r quil/line))
-(def s (data/s quil/line))
+(def q data/q)
+(def p data/p)
+(def r data/r)
+(def s data/s)
 (def t (flip-vert (quartet p q r s)))
 (def u (cycled-quartet (flip-horz (rotate s))))
 
@@ -24,8 +34,8 @@
 
 (defn window-canvas []
   (->Canvas {:origin [0 0]
-             :e1 [(quil/width) 0]
-             :e2 [0 (quil/height)]}))
+             :e1     [(quil/width) 0]
+             :e2     [0 (quil/height)]}))
 
 (defn draw []
   (picture (window-canvas)))

@@ -10,18 +10,18 @@
     (fn [canvas]
       (->Canvas (frame-transform (:frame canvas))))))
 
-(defn- transformer-fn-canvas [new-origin new-corner-1 new-corner-2]
+(defn- transformer-fn [new-origin new-corner-1 new-corner-2]
   (let [transform (make-transform new-origin new-corner-1 new-corner-2)]
     (fn [picture]
       (fn [canvas] (picture (transform canvas))))))
 
 
-(def flip-vert (transformer-fn-canvas [0.0 1.0] [1.0 1.0] [0.0 0.0]))
-(def flip-horz (transformer-fn-canvas [1.0 0.0] [0.0 0.0] [1.0 1.0]))
-(def rotate (transformer-fn-canvas [0.0 1.0] [0.0 0.0] [1.0 1.0]))
+(def flip-vert (transformer-fn [0.0 1.0] [1.0 1.0] [0.0 0.0]))
+(def flip-horz (transformer-fn [1.0 0.0] [0.0 0.0] [1.0 1.0]))
+(def rotate (transformer-fn [0.0 1.0] [0.0 0.0] [1.0 1.0]))
 
 (defn scale [picture factor-x factor-y]
-  (let [transformer (transformer-fn-canvas [0.0 0.0] [factor-x 0.0] [0.0 factor-y])]
+  (let [transformer (transformer-fn [0.0 0.0] [factor-x 0.0] [0.0 factor-y])]
     (transformer picture)))
 
 (defn beside [left-pic right-pic]

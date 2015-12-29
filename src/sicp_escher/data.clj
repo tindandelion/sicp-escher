@@ -1,19 +1,17 @@
 (ns sicp-escher.data
-  (:require [sicp-escher.frame :as frame]
-            [sicp-escher.core :as core]))
+  (:require [sicp-escher.core :as core]))
 
-(defn- seg->picture [segments draw-line-fn]
+(defprotocol Painter
+  (line [this start end]))
+
+(defn- seg->picture [segments]
   (fn [canvas]
-    (let [frame (:frame canvas)]
-      (doseq [[start end] segments]
-        (draw-line-fn
-          (frame/map-vector frame start)
-          (frame/map-vector frame end))))))
+    (doseq [[start end] segments]
+      (line canvas start end))))
 
 (defn- grid [dimen segments]
-  (fn [draw-line-fn]
-    (let [factor (/ 1 dimen)]
-      (core/scale (seg->picture segments draw-line-fn) factor factor))))
+  (let [factor (/ 1 dimen)]
+    (core/scale (seg->picture segments) factor factor)))
 
 (def r
   (grid 16
