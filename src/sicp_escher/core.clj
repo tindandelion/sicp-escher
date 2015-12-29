@@ -3,8 +3,6 @@
 
 (defrecord Canvas [frame])
 
-(defn id [picture] picture)
-
 (defn- make-transform [new-origin new-corner-1 new-corner-2]
   (let [frame-transform (frame/make-transform new-origin new-corner-1 new-corner-2)]
     (fn [canvas]

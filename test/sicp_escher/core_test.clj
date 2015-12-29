@@ -7,9 +7,6 @@
 (def canvas (core/->Canvas {:origin [0.0 0.0] :e1 [100.0 0.0] :e2 [0.0 100.0]}))
 
 (deftest single-picture-transformations
-  (let [same-pic (core/id test-pic)]
-    (is (= {:origin [0.0 0.0] :e1 [100.0 0.0] :e2 [0.0 100.0]}
-           (same-pic canvas)) "No transformation"))
 
   (let [flipped (core/flip-vert test-pic)]
     (is (= {:origin [0.0 100.0] :e1 [100.0 0.0] :e2 [0.0 -100.0]}
