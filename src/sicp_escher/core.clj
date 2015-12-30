@@ -3,8 +3,6 @@
 
 (defrecord Canvas [frame])
 
-(defn id [picture] picture)
-
 (defn- make-transform [new-origin new-corner-1 new-corner-2]
   (let [frame-transform (frame/make-transform new-origin new-corner-1 new-corner-2)]
     (fn [canvas]
@@ -17,8 +15,7 @@
 
 
 (def flip-vert (transformer-fn [0.0 1.0] [1.0 1.0] [0.0 0.0]))
-(def flip-horz (transformer-fn [1.0 0.0] [0.0 0.0] [1.0 1.0]))
-(def rotate (transformer-fn [0.0 1.0] [0.0 0.0] [1.0 1.0]))
+(def rot-ccw (transformer-fn [1.0 0.0] [1.0 1.0] [0.0 0.0]))
 
 (defn scale [picture factor-x factor-y]
   (let [transformer (transformer-fn [0.0 0.0] [factor-x 0.0] [0.0 factor-y])]
@@ -32,8 +29,8 @@
        (right-pic (right-transform canvas))])))
 
 (defn below [lower-pic upper-pic]
-  (let [upper-transform (make-transform [0.0 0.0] [1.0 0.0] [0.0 0.5])
-        lower-transform (make-transform [0.0 0.5] [1.0 0.5] [0.0 1.0])]
+  (let [lower-transform (make-transform [0.0 0.0] [1.0 0.0] [0.0 0.5])
+        upper-transform (make-transform [0.0 0.5] [1.0 0.5] [0.0 1.0])]
     (fn [frame]
       [(upper-pic (upper-transform frame))
        (lower-pic (lower-transform frame))])))
@@ -44,8 +41,8 @@
     (below bottom top)))
 
 (defn cycled-quartet [picture]
-  (let [btm-left (rotate picture)
-        btm-right (rotate btm-left)
-        top-right (rotate btm-right)]
+  (let [btm-left (rot-ccw picture)
+        btm-right (rot-ccw btm-left)
+        top-right (rot-ccw btm-right)]
     (quartet picture top-right btm-left btm-right)))
 

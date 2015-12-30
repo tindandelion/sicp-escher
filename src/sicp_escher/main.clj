@@ -16,19 +16,21 @@
 
 (defn blank [_])
 
-(def q data/q)
+
 (def p data/p)
+(def q data/q)
 (def r data/r)
 (def s data/s)
-(def t (flip-vert (quartet p q r s)))
-(def u (cycled-quartet (flip-horz (rotate s))))
+
+(def t  (quartet p q r s))
+(def u (cycled-quartet (rot-ccw q)))
 
 
-(def side1 (quartet blank blank (rotate t) t))
-(def side2 (quartet side1 side1 (rotate t) t))
+(def side1 (quartet blank blank (rot-ccw t) t))
+(def side2 (quartet side1 side1 (rot-ccw t) t))
 (def corner1 (quartet blank blank blank u))
-(def corner2 (quartet corner1 side1 (rotate side1) u))
-(def pseudocorner (quartet corner2 side2 (rotate side2) (rotate t)))
+(def corner2 (quartet corner1 side1 (rot-ccw side1) u))
+(def pseudocorner (quartet corner2 side2 (rot-ccw side2) (rot-ccw t)))
 (def fishes (cycled-quartet pseudocorner))
 (def picture fishes)
 
@@ -38,7 +40,8 @@
              :e2     [0 (quil/height)]}))
 
 (defn draw []
-  (picture (window-canvas)))
+  (let [pic (flip-vert picture)]
+    (pic (window-canvas))))
 
 (defn setup []
   (quil/no-smooth)
