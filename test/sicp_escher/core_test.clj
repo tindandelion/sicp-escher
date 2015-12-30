@@ -1,10 +1,11 @@
 (ns sicp-escher.core-test
   (:require [clojure.test :refer :all]
-            [sicp-escher.core :as core]))
+            [sicp-escher.core :as core])
+  (:import (sicp_escher.simple_canvas Canvas)))
 
 (def test-pic (fn [canvas] (:frame canvas)))
-
-(def canvas (core/->Canvas {:origin [0.0 0.0] :e1 [100.0 0.0] :e2 [0.0 100.0]}))
+(def frame {:origin [0.0 0.0] :e1 [100.0 0.0] :e2 [0.0 100.0]})
+(def canvas (Canvas. frame))
 
 (deftest single-picture-transformations
 

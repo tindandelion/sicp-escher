@@ -1,12 +1,10 @@
 (ns sicp-escher.core
   (:require [sicp-escher.frame :as frame]))
 
-(defrecord Canvas [frame])
-
 (defn- make-transform [new-origin new-corner-1 new-corner-2]
   (let [frame-transform (frame/make-transform new-origin new-corner-1 new-corner-2)]
     (fn [canvas]
-      (->Canvas (frame-transform (:frame canvas))))))
+      (update canvas :frame frame-transform))))
 
 (defn- transformer-fn [new-origin new-corner-1 new-corner-2]
   (let [transform (make-transform new-origin new-corner-1 new-corner-2)]
@@ -45,4 +43,3 @@
         btm-right (rot-ccw btm-left)
         top-right (rot-ccw btm-right)]
     (quartet picture top-right btm-left btm-right)))
-

@@ -1,28 +1,18 @@
 (ns sicp-escher.main
   (:require [quil.core :as quil])
   (:require [sicp-escher.core :refer :all])
-  (:require [sicp-escher.data :as data]
-            [sicp-escher.frame :as frame])
-  (:import (sicp_escher.core Canvas))
+  (:require [sicp-escher.data :as data])
+  (:require [sicp-escher.simple-canvas :as simple-canvas])
   (:gen-class))
 
-(extend-type Canvas
-  data/Painter
-  (line [this start end]
-    (let [frame (:frame this)]
-      (quil/line
-        (frame/map-vector frame start)
-        (frame/map-vector frame end)))))
-
 (defn blank [_])
-
 
 (def p data/p)
 (def q data/q)
 (def r data/r)
 (def s data/s)
 
-(def t  (quartet p q r s))
+(def t (quartet p q r s))
 (def u (cycled-quartet (rot-ccw q)))
 
 
@@ -35,9 +25,9 @@
 (def picture fishes)
 
 (defn window-canvas []
-  (->Canvas {:origin [0 0]
-             :e1     [(quil/width) 0]
-             :e2     [0 (quil/height)]}))
+  (simple-canvas/->Canvas {:origin [0 0]
+                           :e1     [(quil/width) 0]
+                           :e2     [0 (quil/height)]}))
 
 (defn draw []
   (let [pic (flip-vert picture)]
@@ -54,5 +44,7 @@
                 :setup setup
                 :draw draw
                 :size [600 600])
+
+
 
 

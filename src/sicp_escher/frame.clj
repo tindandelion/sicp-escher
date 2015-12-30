@@ -23,5 +23,5 @@
        :e1     (sub-vect (map-vector frame corner-left) new-origin)
        :e2     (sub-vect (map-vector frame corner-btm) new-origin)})))
 
-
+(defprotocol Transformable)
 
