@@ -2,17 +2,25 @@
   (:require [sicp-escher.frame :as frame]))
 
 (defn- make-transform [new-origin new-corner-1 new-corner-2]
-  (let [frame-transform (frame/make-transform new-origin new-corner-1 new-corner-2)]
+  (let [frame-transform (frame/frame-transform new-origin new-corner-1 new-corner-2)]
     (fn [canvas]
       (update canvas :frame frame-transform))))
 
-(defn- transformer-fn [new-origin new-corner-1 new-corner-2]
-  (let [transform (make-transform new-origin new-corner-1 new-corner-2)]
-    (fn [picture]
-      (fn [canvas] (picture (transform canvas))))))
+(defn- transformer-fn
+  ([new-origin new-corner-1 new-corner-2]
+   (fn [picture]
+     (fn [canvas]
+       (picture (frame/transform canvas
+                                 {:origin   new-origin
+                                  :corner-1 new-corner-1
+                                  :corner-2 new-corner-2})))))
+  ([{:keys [origin corner-1 corner-2]}]
+    (transformer-fn origin corner-1 corner-2)))
 
+(defn flip-vert [picture]
+  (let [coords {:origin [0.0 1.0] :corner-1 [1.0 1.0] :corner-2 [0.0 0.0]}]
+    #(picture (frame/transform % coords))))
 
-(def flip-vert (transformer-fn [0.0 1.0] [1.0 1.0] [0.0 0.0]))
 (def rot-ccw (transformer-fn [1.0 0.0] [1.0 1.0] [0.0 0.0]))
 
 (defn scale [picture factor-x factor-y]

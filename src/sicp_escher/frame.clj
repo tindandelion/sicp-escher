@@ -16,12 +16,13 @@
       (scale-vect e1 [x x])
       (scale-vect e2 [y y]))))
 
-(defn make-transform [origin corner-left corner-btm]
+(defn frame-transform [origin corner-left corner-btm]
   (fn [frame]
     (let [new-origin (map-vector frame origin)]
       {:origin new-origin
        :e1     (sub-vect (map-vector frame corner-left) new-origin)
        :e2     (sub-vect (map-vector frame corner-btm) new-origin)})))
 
-(defprotocol Transformable)
+(defprotocol Transformable
+  (transform [this {:keys [origin corner-1 corner-2]}]))
 

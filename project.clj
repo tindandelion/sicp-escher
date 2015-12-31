@@ -7,4 +7,5 @@
                  [quil "2.2.6"]]
   :main ^:skip-aot sicp-escher.core
   :target-path "target/%s"
-  :profiles {:uberjar {:aot :all}})
+  :profiles {:uberjar {:aot :all}
+             :dev {:plugins [[com.jakemccrary/lein-test-refresh "0.12.0"]]}})

@@ -14,6 +14,6 @@
 
 (deftest create-frame-transformations
   (let [frame {:origin [0.0 0.0] :e1 [100.0 0.0] :e2 [0.0 100.0]}
-        transform (frame/make-transform [0.5 0.5] [1.0 0.5] [0.5 1.0])]
+        transform (frame/frame-transform [0.5 0.5] [1.0 0.5] [0.5 1.0])]
     (is (= {:origin [50.0 50.0] :e1 [50.0 0.0] :e2 [0.0 50.0]}
            (transform frame)))))

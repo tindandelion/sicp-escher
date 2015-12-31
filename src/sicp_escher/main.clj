@@ -45,6 +45,9 @@
                 :draw draw
                 :size [600 600])
 
+(defn main []
+  )
+
 
 
 
