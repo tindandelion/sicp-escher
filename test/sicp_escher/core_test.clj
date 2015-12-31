@@ -5,23 +5,7 @@
 
 (def test-pic (fn [canvas] (:frame canvas)))
 (def frame {:origin [0.0 0.0] :e1 [100.0 0.0] :e2 [0.0 100.0]})
-(def canvas (simple/->Canvas frame))
-
-(deftest single-picture-transformations
-
-  (let [flipped (core/flip-vert test-pic)]
-    (is (= {:origin [0.0 100.0] :e1 [100.0 0.0] :e2 [0.0 -100.0]}
-           (flipped canvas))
-        "Flip picture over the vertical axis"))
-
-  (let [scaled (core/scale test-pic 0.5 0.3)]
-    (is (= {:origin [0.0 0.0] :e1 [50.0 0.0] :e2 [0.0 30.0]} (scaled canvas))
-        "Scale a picture by given factors"))
-
-  (let [rotated (core/rot-ccw test-pic)]
-    (is (= {:origin [100.0 0.0] :e1 [0.0 100.0] :e2 [-100.0 0.0]} (rotated canvas))
-        "Rotate a picture counter-clockwise by 90 degrees"))
-  )
+(def canvas (simple/->SimpleCanvas frame))
 
 (deftest combining-picture-transformations
   (let [combination (core/beside test-pic test-pic)]

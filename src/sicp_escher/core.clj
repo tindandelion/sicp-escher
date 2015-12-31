@@ -1,45 +1,36 @@
 (ns sicp-escher.core
-  (:require [sicp-escher.frame :as frame]))
+  (:require [sicp-escher.canvas :as canvas]))
 
-(defn- make-transform [new-origin new-corner-1 new-corner-2]
-  (let [frame-transform (frame/frame-transform new-origin new-corner-1 new-corner-2)]
-    (fn [canvas]
-      (update canvas :frame frame-transform))))
-
-(defn- transformer-fn
-  ([new-origin new-corner-1 new-corner-2]
-   (fn [picture]
-     (fn [canvas]
-       (picture (frame/transform canvas
-                                 {:origin   new-origin
-                                  :corner-1 new-corner-1
-                                  :corner-2 new-corner-2})))))
-  ([{:keys [origin corner-1 corner-2]}]
-    (transformer-fn origin corner-1 corner-2)))
+(defn- canvas-transform [picture transformer & args]
+  #(picture (apply transformer % args)))
 
 (defn flip-vert [picture]
-  (let [coords {:origin [0.0 1.0] :corner-1 [1.0 1.0] :corner-2 [0.0 0.0]}]
-    #(picture (frame/transform % coords))))
-
-(def rot-ccw (transformer-fn [1.0 0.0] [1.0 1.0] [0.0 0.0]))
+  (canvas-transform picture canvas/flip-vert))
 
 (defn scale [picture factor-x factor-y]
-  (let [transformer (transformer-fn [0.0 0.0] [factor-x 0.0] [0.0 factor-y])]
-    (transformer picture)))
+  (canvas-transform picture canvas/scale factor-x factor-y))
+
+(defn rot-ccw [picture]
+  (canvas-transform picture canvas/rot-ccw))
+
+(defn move [picture factor-x factor-y]
+  (canvas-transform picture canvas/move factor-x factor-y))
 
 (defn beside [left-pic right-pic]
-  (let [left-transform (make-transform [0.0 0.0] [0.5 0.0] [0.0 1.0])
-        right-transform (make-transform [0.5 0.0] [1.0 0.0] [0.5 1.0])]
+  (let [new-left (scale left-pic 0.5 1.0)
+        new-right (-> right-pic
+                      (scale 0.5 1.0)
+                      (move 0.5 0.0))]
     (fn [canvas]
-      [(left-pic (left-transform canvas))
-       (right-pic (right-transform canvas))])))
+      [(new-left canvas) (new-right canvas)])))
 
 (defn below [lower-pic upper-pic]
-  (let [lower-transform (make-transform [0.0 0.0] [1.0 0.0] [0.0 0.5])
-        upper-transform (make-transform [0.0 0.5] [1.0 0.5] [0.0 1.0])]
+  (let [new-lower (scale lower-pic 1.0 0.5)
+        new-upper (-> upper-pic
+                      (scale 1.0 0.5)
+                      (move 0.0 0.5))]
     (fn [frame]
-      [(upper-pic (upper-transform frame))
-       (lower-pic (lower-transform frame))])))
+      [(new-upper frame) (new-lower frame)])))
 
 (defn quartet [top-left top-right bottom-left bottom-right]
   (let [top (beside top-left top-right)

@@ -2,7 +2,7 @@
   (:require [quil.core :as quil])
   (:require [sicp-escher.core :refer :all])
   (:require [sicp-escher.data :as data])
-  (:require [sicp-escher.simple-canvas :as simple-canvas])
+  (:require [sicp-escher.simple-canvas :as canvas])
   (:gen-class))
 
 (defn blank [_])
@@ -25,9 +25,9 @@
 (def picture fishes)
 
 (defn window-canvas []
-  (simple-canvas/->Canvas {:origin [0 0]
-                           :e1     [(quil/width) 0]
-                           :e2     [0 (quil/height)]}))
+  (canvas/->SimpleCanvas {:origin [0 0]
+                           :e1    [(quil/width) 0]
+                           :e2    [0 (quil/height)]}))
 
 (defn draw []
   (let [pic (flip-vert picture)]
@@ -44,10 +44,6 @@
                 :setup setup
                 :draw draw
                 :size [600 600])
-
-(defn main []
-  )
-
 
 
 
