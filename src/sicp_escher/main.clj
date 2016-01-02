@@ -7,14 +7,8 @@
 
 (defn blank [_])
 
-(def p data/p)
-(def q data/q)
-(def r data/r)
-(def s data/s)
-
-(def t (quartet p q r s))
-(def u (cycled-quartet (rot-ccw q)))
-
+(def t data/t)
+(def u data/u)
 
 (def side1 (quartet blank blank (rot-ccw t) t))
 (def side2 (quartet side1 side1 (rot-ccw t) t))
@@ -24,14 +18,14 @@
 (def fishes (cycled-quartet pseudocorner))
 (def picture fishes)
 
-(defn window-canvas []
-  (canvas/->SimpleCanvas {:origin [0 0]
-                           :e1    [(quil/width) 0]
-                           :e2    [0 (quil/height)]}))
+(defn initial-transform [picture]
+  (-> picture
+      (flip-vert)
+      (scale (quil/width) (quil/height))))
 
 (defn draw []
-  (let [pic (flip-vert picture)]
-    (pic (window-canvas))))
+  (let [pic (initial-transform picture)]
+    (pic (canvas/initial))))
 
 (defn setup []
   (quil/no-smooth)
@@ -43,7 +37,7 @@
                 :title "Escher"
                 :setup setup
                 :draw draw
-                :size [600 600])
+                :size [800 800])
 
 
 

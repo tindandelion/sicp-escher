@@ -62,3 +62,10 @@
     (quil/line
       (map-vector frame start)
       (map-vector frame end))))
+
+(defn initial []
+  (->SimpleCanvas {:origin [0.0 0.0]
+                   :e1     [1.0 0.0]
+                   :e2     [0.0 1.0]}))
+
+

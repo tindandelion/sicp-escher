@@ -1,5 +1,5 @@
 (ns sicp-escher.data
-  (:require [sicp-escher.core :as core]))
+  (:require [sicp-escher.core :refer :all]))
 
 (defprotocol Painter
   (line [this start end]))
@@ -11,7 +11,7 @@
 
 (defn- grid [dimen segments]
   (let [factor (/ 1 dimen)]
-    (core/scale (seg->picture segments) factor factor)))
+    (scale (seg->picture segments) factor factor)))
 
 (def p
   (grid 16
@@ -62,3 +62,7 @@
          [[13 7] [15 5]] [[15 5] [15 8]] [[15 8] [13 7]]
          [[12 16] [13 13]] [[13 13] [15 9]] [[15 9] [16 8]]
          [[13 13] [16 14]] [[14 11] [16 12]] [[15 9] [16 10]]]))
+
+(def t (quartet p q r s))
+(def u (cycled-quartet (rot-ccw q)))
+
