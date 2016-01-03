@@ -22,6 +22,12 @@
   )
 
 (deftest high-order-transformations
+  (let [flipped (core/flip-vert test-pic)]
+    (is (= {:origin [0.0 100.0] :e1 [100.0 0.0] :e2 [0.0 -100.0]}
+           (flipped canvas))
+        "Flip a picture vertically"))
+
+
   (let [combination (core/quartet test-pic test-pic test-pic test-pic)
 
         top-left {:origin [0.0 50.0] :e1 [50.0 0.0] :e2 [0.0 50.0]}

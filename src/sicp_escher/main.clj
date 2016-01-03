@@ -33,11 +33,12 @@
   (quil/stroke-weight 1)
   (quil/background 200))
 
-(quil/defsketch escher
-                :title "Escher"
-                :setup setup
-                :draw draw
-                :size [800 800])
+(defn -main []
+  (quil/defsketch escher
+                  :title "Escher"
+                  :setup setup
+                  :draw draw
+                  :size [800 800]))
 
 
 

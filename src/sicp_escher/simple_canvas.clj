@@ -37,10 +37,6 @@
 (defrecord SimpleCanvas [frame]
   canvas/Canvas
 
-  (flip-vert [this]
-    (let [coords {:origin [0.0 1.0] :corner-1 [1.0 1.0] :corner-2 [0.0 0.0]}]
-      (transform this coords)))
-
   (scale [this factor-x factor-y]
     (let [coords {:origin   [0.0 0.0]
                   :corner-1 [factor-x 0.0]

@@ -7,11 +7,6 @@
 (def canvas (simple/->SimpleCanvas frame))
 
 (deftest simple-canvas-transformations
-  (let [flipped (canvas/flip-vert canvas)]
-    (is (= {:origin [0.0 100.0] :e1 [100.0 0.0] :e2 [0.0 -100.0]}
-           (:frame flipped))
-        "Flip a canvas over the vertical axis"))
-
   (let [scaled (canvas/scale canvas 0.5 0.3)]
     (is (= {:origin [0.0 0.0] :e1 [50.0 0.0] :e2 [0.0 30.0]}
            (:frame scaled))

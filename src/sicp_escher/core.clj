@@ -4,9 +4,6 @@
 (defn- canvas-transform [picture transformer & args]
   #(picture (apply transformer % args)))
 
-(defn flip-vert [picture]
-  (canvas-transform picture canvas/flip-vert))
-
 (defn scale [picture factor-x factor-y]
   (canvas-transform picture canvas/scale factor-x factor-y))
 
@@ -31,6 +28,11 @@
                       (move 0.0 0.5))]
     (fn [frame]
       [(new-upper frame) (new-lower frame)])))
+
+(defn flip-vert [picture]
+  (-> picture
+      (scale 1.0 -1.0)
+      (move 0.0 1.0)))
 
 (defn quartet [top-left top-right bottom-left bottom-right]
   (let [top (beside top-left top-right)

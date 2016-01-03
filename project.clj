@@ -5,7 +5,7 @@
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :dependencies [[org.clojure/clojure "1.7.0"]
                  [quil "2.2.6"]]
-  :main ^:skip-aot sicp-escher.core
+  :main ^:skip-aot sicp-escher.main
   :target-path "target/%s"
   :profiles {:uberjar {:aot :all}
              :dev {:plugins [[com.jakemccrary/lein-test-refresh "0.12.0"]]}})
