@@ -53,6 +53,9 @@
     (let [coords {:origin [1.0 0.0] :corner-1 [1.0 1.0] :corner-2 [0.0 0.0]}]
       (transform this coords)))
 
+  (draw [this picture]
+    (picture this))
+
   data/Painter
   (line [_ start end]
     (quil/line
@@ -63,5 +66,9 @@
   (->SimpleCanvas {:origin [0.0 0.0]
                    :e1     [1.0 0.0]
                    :e2     [0.0 1.0]}))
+
+(defn draw [picture]
+  (let [cnv (initial)]
+    (canvas/draw cnv picture)))
 
 

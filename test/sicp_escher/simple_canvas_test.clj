@@ -22,3 +22,8 @@
            (:frame moved))
         "Move a canvas by a given factor"))
   )
+
+(deftest draw-picture
+  (let [picture (fn [cnv] [:drawn-on cnv])]
+    (is (= [:drawn-on canvas] (canvas/draw canvas picture))
+        "Draw applies picture as a function with canvas as an argument")))

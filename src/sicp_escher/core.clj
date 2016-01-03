@@ -2,7 +2,7 @@
   (:require [sicp-escher.canvas :as canvas]))
 
 (defn- canvas-transform [picture transformer & args]
-  #(picture (apply transformer % args)))
+  #(canvas/draw (apply transformer % args) picture))
 
 (defn scale [picture factor-x factor-y]
   (canvas-transform picture canvas/scale factor-x factor-y))
@@ -18,16 +18,18 @@
         new-right (-> right-pic
                       (scale 0.5 1.0)
                       (move 0.5 0.0))]
-    (fn [canvas]
-      [(new-left canvas) (new-right canvas)])))
+    (fn [cnv]
+      [(canvas/draw cnv new-left)
+       (canvas/draw cnv new-right)])))
 
 (defn below [lower-pic upper-pic]
   (let [new-lower (scale lower-pic 1.0 0.5)
         new-upper (-> upper-pic
                       (scale 1.0 0.5)
                       (move 0.0 0.5))]
-    (fn [frame]
-      [(new-upper frame) (new-lower frame)])))
+    (fn [cnv]
+      [(canvas/draw cnv new-upper)
+       (canvas/draw cnv new-lower)])))
 
 (defn flip-vert [picture]
   (-> picture

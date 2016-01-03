@@ -2,7 +2,7 @@
   (:require [quil.core :as quil])
   (:require [sicp-escher.core :refer :all])
   (:require [sicp-escher.data :as data])
-  (:require [sicp-escher.simple-canvas :as canvas])
+  (:require [sicp-escher.quil-canvas :as canvas])
   (:gen-class))
 
 (defn blank [_])
@@ -16,7 +16,7 @@
 (def corner2 (quartet corner1 side1 (rot-ccw side1) u))
 (def pseudocorner (quartet corner2 side2 (rot-ccw side2) (rot-ccw t)))
 (def fishes (cycled-quartet pseudocorner))
-(def picture fishes)
+(def picture data/p)
 
 (defn initial-transform [picture]
   (-> picture
@@ -25,7 +25,7 @@
 
 (defn draw []
   (let [pic (initial-transform picture)]
-    (pic (canvas/initial))))
+    (canvas/draw pic)))
 
 (defn setup []
   (quil/no-smooth)
@@ -36,6 +36,7 @@
 (defn -main []
   (quil/defsketch escher
                   :title "Escher"
+                  :renderer :opengl
                   :setup setup
                   :draw draw
                   :size [800 800]))
