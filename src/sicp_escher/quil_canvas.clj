@@ -55,8 +55,9 @@
 
   (draw [this picture]
     (quil/push-matrix)
-    (picture this)
-    (quil/pop-matrix))
+    (try
+      (picture this)
+      (finally (quil/pop-matrix))))
 
   data/Painter
   (line [_ start end]

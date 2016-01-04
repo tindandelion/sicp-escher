@@ -16,7 +16,7 @@
 (def corner2 (quartet corner1 side1 (rot-ccw side1) u))
 (def pseudocorner (quartet corner2 side2 (rot-ccw side2) (rot-ccw t)))
 (def fishes (cycled-quartet pseudocorner))
-(def picture data/p)
+(def picture t)
 
 (defn initial-transform [picture]
   (-> picture
@@ -36,7 +36,6 @@
 (defn -main []
   (quil/defsketch escher
                   :title "Escher"
-                  :renderer :opengl
                   :setup setup
                   :draw draw
                   :size [800 800]))
