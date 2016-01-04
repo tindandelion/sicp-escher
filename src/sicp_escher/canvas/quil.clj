@@ -2,6 +2,11 @@
   (:require [sicp-escher.canvas :as canvas]
             [quil.core :as quil]))
 
+(defn- rot-center [angle-radians]
+  (quil/translate 0.5 0.5)
+  (quil/rotate angle-radians)
+  (quil/translate -0.5 -0.5))
+
 (defrecord QuilCanvas [stroke-weight]
   canvas/Canvas
 
@@ -14,9 +19,7 @@
     this)
 
   (rot-ccw [this]
-    (quil/translate 0.5 0.5)
-    (quil/rotate quil/HALF-PI)
-    (quil/translate -0.5 -0.5)
+    (rot-center quil/HALF-PI)
     this)
 
   (draw [this picture]
