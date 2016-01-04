@@ -51,7 +51,8 @@
 
   (rot-ccw [this]
     (quil/translate 0.5 0.5)
-    (quil/rotate (- quil/HALF-PI))
+    (quil/rotate quil/HALF-PI)
+    (quil/translate -0.5 -0.5)
     this)
 
   (draw [this picture]
