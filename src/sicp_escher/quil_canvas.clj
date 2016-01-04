@@ -34,27 +34,29 @@
   (let [tr (frame-transform origin corner-1 corner-2)]
     (update canvas :frame tr)))
 
+(defn update-stroke-weight [value scale-factor]
+  (let [current (or value 1)]
+    (/ current scale-factor)))
+
 (defrecord SimpleCanvas [frame]
   canvas/Canvas
 
   (scale [this factor-x factor-y]
-    (let [coords {:origin   [0.0 0.0]
-                  :corner-1 [factor-x 0.0]
-                  :corner-2 [0.0 factor-y]}]
-      (transform this coords)))
+    (quil/scale factor-x factor-y)
+    (update this :stroke-weight update-stroke-weight factor-x))
 
   (move [this factor-x factor-y]
-    (let [coords {:origin   [factor-x factor-y]
-                  :corner-1 [(+ 1.0 factor-x) factor-y]
-                  :corner-2 [factor-x (+ 1.0 factor-y)]}]
-      (transform this coords)))
+    (quil/translate factor-x factor-y)
+    this)
 
   (rot-ccw [this]
-    (let [coords {:origin [1.0 0.0] :corner-1 [1.0 1.0] :corner-2 [0.0 0.0]}]
-      (transform this coords)))
+    (quil/translate 0.5 0.5)
+    (quil/rotate (- quil/HALF-PI))
+    this)
 
   (draw [this picture]
     (quil/push-matrix)
+    (quil/stroke-weight (or (:stroke-weight this) 1))
     (try
       (picture this)
       (finally (quil/pop-matrix))))
