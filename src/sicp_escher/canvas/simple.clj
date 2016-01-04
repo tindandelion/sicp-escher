@@ -1,6 +1,5 @@
 (ns sicp-escher.canvas.simple
-  (:require [sicp-escher.data :as data]
-            [sicp-escher.canvas :as canvas]
+  (:require [sicp-escher.canvas :as canvas]
             [quil.core :as quil]))
 
 (defn- add-vect [[x1 y1] [x2 y2]]
@@ -56,7 +55,6 @@
   (draw [this picture]
     (picture this))
 
-  data/Painter
   (line [_ start end]
     (quil/line
       (map-vector frame start)

@@ -5,5 +5,7 @@
   (scale [this factor-x factor-y])
   (move [this factor-x factor-y])
 
-  (draw [this picture]))
+  (draw [this picture])
+  (line [this start end]))
+
 

@@ -1,6 +1,6 @@
-(ns sicp-escher.core-test
+(ns sicp-escher.transforms-test
   (:require [clojure.test :refer :all]
-            [sicp-escher.core :as core]
+            [sicp-escher.transforms :as core]
             [sicp-escher.canvas.simple :as simple]))
 
 (def test-pic (fn [canvas] (:frame canvas)))

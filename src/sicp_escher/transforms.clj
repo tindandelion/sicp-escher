@@ -1,4 +1,4 @@
-(ns sicp-escher.core
+(ns sicp-escher.transforms
   (:require [sicp-escher.canvas :as canvas]))
 
 (defn- canvas-transform [picture transformer & args]

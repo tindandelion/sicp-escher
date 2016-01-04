@@ -1,13 +1,11 @@
 (ns sicp-escher.data
-  (:require [sicp-escher.core :refer :all]))
-
-(defprotocol Painter
-  (line [this start end]))
+  (:require [sicp-escher.transforms :refer :all]
+            [sicp-escher.canvas :as canvas]))
 
 (defn- seg->picture [segments]
   (fn [canvas]
     (doseq [[start end] segments]
-      (line canvas start end))))
+      (canvas/line canvas start end))))
 
 (defn- grid [dimen segments]
   (let [factor (/ 1 dimen)]

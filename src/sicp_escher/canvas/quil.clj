@@ -1,6 +1,5 @@
 (ns sicp-escher.canvas.quil
-  (:require [sicp-escher.data :as data]
-            [sicp-escher.canvas :as canvas]
+  (:require [sicp-escher.canvas :as canvas]
             [quil.core :as quil]))
 
 (defrecord QuilCanvas [stroke-weight]
@@ -27,7 +26,6 @@
       (picture this)
       (finally (quil/pop-matrix))))
 
-  data/Painter
   (line [_ start end]
     (quil/line start end)))
 

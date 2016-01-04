@@ -1,6 +1,6 @@
 (ns sicp-escher.main
   (:require [quil.core :as quil])
-  (:require [sicp-escher.core :refer :all])
+  (:require [sicp-escher.transforms :refer :all])
   (:require [sicp-escher.data :as data])
   (:require [sicp-escher.canvas.quil :as canvas])
   (:gen-class))
