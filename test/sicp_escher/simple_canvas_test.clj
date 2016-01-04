@@ -1,6 +1,6 @@
 (ns sicp-escher.simple-canvas-test
   (:require [clojure.test :refer :all]
-            [sicp-escher.simple-canvas :as simple]
+            [sicp-escher.canvas.simple :as simple]
             [sicp-escher.canvas :as canvas]))
 
 (def frame {:origin [0.0 0.0] :e1 [100.0 0.0] :e2 [0.0 100.0]})

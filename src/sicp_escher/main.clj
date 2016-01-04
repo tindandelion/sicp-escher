@@ -2,7 +2,7 @@
   (:require [quil.core :as quil])
   (:require [sicp-escher.core :refer :all])
   (:require [sicp-escher.data :as data])
-  (:require [sicp-escher.quil-canvas :as qc])
+  (:require [sicp-escher.canvas.quil :as canvas])
   (:gen-class))
 
 (defn blank [_])
@@ -26,7 +26,7 @@
 (defn draw []
   (-> picture
       (initial-transform)
-      (qc/draw)))
+      (canvas/draw)))
 
 (defn setup []
   (quil/no-smooth)

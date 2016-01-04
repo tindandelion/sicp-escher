@@ -1,7 +1,7 @@
 (ns sicp-escher.core-test
   (:require [clojure.test :refer :all]
             [sicp-escher.core :as core]
-            [sicp-escher.simple-canvas :as simple]))
+            [sicp-escher.canvas.simple :as simple]))
 
 (def test-pic (fn [canvas] (:frame canvas)))
 (def frame {:origin [0.0 0.0] :e1 [100.0 0.0] :e2 [0.0 100.0]})
