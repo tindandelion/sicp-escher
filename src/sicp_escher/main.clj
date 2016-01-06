@@ -5,18 +5,15 @@
   (:require [sicp-escher.canvas.quil :as canvas])
   (:gen-class))
 
-(defn blank [_])
-
-(def t data/t)
-(def u data/u)
-
-(def side1 (quartet blank blank (rot-ccw t) t))
-(def side2 (quartet side1 side1 (rot-ccw t) t))
-(def corner1 (quartet blank blank blank u))
-(def corner2 (quartet corner1 side1 (rot-ccw side1) u))
-(def pseudocorner (quartet corner2 side2 (rot-ccw side2) (rot-ccw t)))
-(def fishes (cycled-quartet pseudocorner))
-(def picture fishes)
+(defn compose-picture [t u]
+  (let [blank (fn [_])
+        side1 (quartet blank blank (rot-ccw t) t)
+        side2 (quartet side1 side1 (rot-ccw t) t)
+        corner1 (quartet blank blank blank u)
+        corner2 (quartet corner1 side1 (rot-ccw side1) u)
+        pseudocorner (quartet corner2 side2 (rot-ccw side2) (rot-ccw t))
+        entire-picture (cycled-quartet pseudocorner)]
+    entire-picture))
 
 (defn initial-transform [picture]
   (-> picture
@@ -24,7 +21,7 @@
       (scale (quil/width) (quil/height))))
 
 (defn draw []
-  (-> picture
+  (-> (quil/state :picture)
       (initial-transform)
       (canvas/draw)))
 
@@ -32,7 +29,9 @@
   (quil/no-smooth)
   (quil/frame-rate 1)
   (quil/stroke-weight 1)
-  (quil/background 200))
+  (quil/background 200)
+  (quil/set-state! :picture (compose-picture data/t data/u))
+  (quil/no-loop))
 
 (defn -main []
   (quil/defsketch escher
