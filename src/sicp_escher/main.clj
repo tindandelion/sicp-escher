@@ -18,7 +18,7 @@
       (canvas/draw)))
 
 (defn setup []
-  (quil/no-smooth)
+  (quil/smooth)
   (quil/frame-rate 1)
   (quil/stroke-weight 1)
   (quil/background 200)
