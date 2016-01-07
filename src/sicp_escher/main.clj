@@ -22,7 +22,7 @@
   (quil/frame-rate 1)
   (quil/stroke-weight 1)
   (quil/background 200)
-  (quil/set-state! :picture (data/compose-picture (svg/t) lines/u))
+  (quil/set-state! :picture (data/compose-picture (svg/t) (svg/u)))
   (quil/no-loop))
 
 (defn -main []
