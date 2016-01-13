@@ -1,4 +1,4 @@
-(ns sicp-escher.transforms-test
+(ns sicp-escher.composite-transforms-test
   (:require [clojure.test :refer :all]
             [sicp-escher.transforms :as core]
             [sicp-escher.canvas.simple :as simple]))
@@ -7,26 +7,7 @@
 (def frame {:origin [0.0 0.0] :e1 [100.0 0.0] :e2 [0.0 100.0]})
 (def canvas (simple/->SimpleCanvas frame))
 
-(deftest combining-picture-transformations
-  (let [combination (core/beside test-pic test-pic)]
-    (is (= [{:origin [0.0 0.0] :e1 [50.0 0.0] :e2 [0.0 100.0]}
-            {:origin [50.0 0.0] :e1 [50.0 0.0] :e2 [0.0 100.0]}]
-           (combination canvas))
-        "Placing pictures beside each other"))
-
-  (let [combination (core/below test-pic test-pic)
-        upper {:origin [0.0 50.0] :e1 [100.0 0.0] :e2 [0.0 50.0]}
-        lower {:origin [0.0 0.0] :e1 [100.0 0.0] :e2 [0.0 50.0]}]
-    (is (= [upper lower] (combination canvas))
-        "Placing pictures below each other"))
-  )
-
 (deftest high-order-transformations
-  (let [flipped (core/flip-vert test-pic)]
-    (is (= {:origin [0.0 100.0] :e1 [100.0 0.0] :e2 [0.0 -100.0]}
-           (flipped canvas))
-        "Flip a picture vertically"))
-
 
   (let [combination (core/quartet test-pic test-pic test-pic test-pic)
 
