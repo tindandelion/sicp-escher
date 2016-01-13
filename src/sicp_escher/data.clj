@@ -1,13 +1,25 @@
 (ns sicp-escher.data
   (:require [sicp-escher.transforms :refer :all]))
 
-(defn compose-picture [t u]
-  (let [blank (fn [_])
-        side1 (quartet blank blank (rot-ccw t) t)
-        side2 (quartet side1 side1 (rot-ccw t) t)
-        corner1 (quartet blank blank blank u)
-        corner2 (quartet corner1 side1 (rot-ccw side1) u)
-        pseudocorner (quartet corner2 side2 (rot-ccw side2) (rot-ccw t))
+(defn blank [_])
+
+(defn side-split [pic n]
+  (if (zero? n)
+    blank
+    (let [smaller (side-split pic (dec n))]
+      (quartet smaller smaller (rot-ccw pic) pic))))
+
+(defn corner-split [side-pic corner-pic n]
+  (if (zero? n)
+    blank
+    (let [side (side-split side-pic (dec n))
+          corner (corner-split side-pic corner-pic (dec n))]
+      (quartet corner side (rot-ccw side) corner-pic))))
+
+(defn compose-picture [side-pic corner-pic n]
+  (let [side (side-split side-pic n)
+        corner (corner-split side-pic corner-pic n)
+        pseudocorner (quartet corner side (rot-ccw side) (rot-ccw side-pic))
         entire-picture (cycled-quartet pseudocorner)]
     entire-picture))
 
