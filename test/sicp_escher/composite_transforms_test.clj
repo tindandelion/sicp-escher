@@ -1,6 +1,6 @@
 (ns sicp-escher.composite-transforms-test
   (:require [clojure.test :refer :all]
-            [sicp-escher.transforms :as core]
+            [sicp-escher.transforms :as tr]
             [sicp-escher.canvas.simple :as simple]))
 
 (def test-pic (fn [canvas] (:frame canvas)))
@@ -9,7 +9,7 @@
 
 (deftest high-order-transformations
 
-  (let [combination (core/quartet test-pic test-pic test-pic test-pic)
+  (let [combination (tr/quartet test-pic test-pic test-pic test-pic)
 
         top-left {:origin [0.0 50.0] :e1 [50.0 0.0] :e2 [0.0 50.0]}
         top-right {:origin [50.0 50.0] :e1 [50.0 0.0] :e2 [0.0 50.0]}
@@ -21,7 +21,7 @@
         "Placing pictures in four quadrants"))
 
 
-  (let [combination (core/cycled-quartet test-pic)
+  (let [combination (tr/cycled-quartet test-pic)
         top-left {:origin [0.0 50.0] :e1 [50.0 0.0] :e2 [0.0 50.0]}
         top-right {:origin [50.0 100.0] :e1 [0.0 -50.0] :e2 [50.0 0.0]}
         btm-left {:origin [50.0 0.0] :e1 [0.0 50.0] :e2 [-50.0 0.0]}
